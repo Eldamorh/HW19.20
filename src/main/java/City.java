@@ -2,18 +2,18 @@ import java.util.UUID;
 
 public final class City {
     private final String name;
-    private final UUID id;
+    private final String id;
 
     public City(String name) {
         this.name = name;
-        id = UUID.randomUUID();
+        id = UUID.randomUUID().toString();
     }
 
     public String getName() {
         return name;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 }

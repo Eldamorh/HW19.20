@@ -1,25 +1,25 @@
 import java.sql.*;
+import java.util.List;
 
 
 public class Main {
     public static void main(String[] args) throws SQLException {
         String dbUrl = "jdbc:sqlite:C:\\Sqlite\\homeworks.db";
 
-        Connection connection = DriverManager.getConnection(dbUrl);
+        try (Connection connection = DriverManager.getConnection(dbUrl)) {
 
-        createDepartmentsTable(connection);
+            createDepartmentsTable(connection);
 
-        CitiesService.addCity(new City("Харьков"), connection);
-        CitiesService.addCity(new City("Киев"), connection);
-        CitiesService.addCity(new City("Москва"), connection);
-        CitiesService.addCity(new City("Лондон"), connection);
+            CitiesService.addCity(new City("Харьков"), connection);
+            CitiesService.addCity(new City("Киев"), connection);
+            CitiesService.addCity(new City("Москва"), connection);
+            CitiesService.addCity(new City("Лондон"), connection);
 
-        ResultSet resultSet = CitiesService.getCities(connection);
-        while (resultSet.next()) {
-            System.out.println(resultSet.getString(1) + " | " + resultSet.getString(2));
+            List<String> cities = CitiesService.getCities(connection);
+
+
+            closeConnection(connection);
         }
-
-        closeConnection(connection);
     }
 
     private static void createDepartmentsTable(Connection connection) throws SQLException {
